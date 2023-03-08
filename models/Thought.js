@@ -1,19 +1,19 @@
-const mongoose = require('mongoose');
+const {Schema, Types, model} = require('mongoose');
 
-const thoughtSchema = mongoose.Schema({
+const thoughtSchema = new Schema({
     thoughtText: { type: String, required: true, min: 1, max: 280 },
     createdAt: { type: Date, default: Date.now }, //getter method to format the timestamp on query
     username: { type: String, required: true },
     reactions: reactionSchema
 });
 
-const reactionSchema = mongoose.Schema({
-    reactionId: {type: new mongoose.Schema.Types.ObjectId, default: new ObjectId }, //?//
+const reactionSchema = new Schema({
+    reactionId: {type: new Schema.Types.ObjectId, default: () => new Types.ObjectId }, 
     reactionBody: { type: String, required: true, min: 280 },
     username: { type: String, required: true },
     createdAt: { type: Date, default: Date.now } //getter method to format the timestamp on query
 })
 
-const Thoughts = mongoose.model('Thoughts', thoughtSchema);
+const Thoughts = model('Thoughts', thoughtSchema);
 
 module.exports = Thoughts;
