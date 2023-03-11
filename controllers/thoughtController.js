@@ -4,8 +4,8 @@ module.exports = {
     //get all thoughts
     getThoughts(req, res) {
         Thought.find()
-        // .populate({path: 'reactions', select: '-__v'})
-        // .select('-__v')
+        .populate({path: 'reactions', select: '-__v'})
+        .select('-__v')
         .then((thoughts) => res.json(thoughts))
         .catch((err) => res.status(500).json(err))
     },
@@ -25,10 +25,10 @@ module.exports = {
     createThought(req, res) {
         Thought.create(req.body)
         .then(({ _id }) => {
-            User.findByIdAndUpdate(
-                {_id: req.params.userId},
-                {$push: {thoughts: _id}},
-                {new: true}
+            return User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $addToSet: {thoughts: _id} },
+                { new: true }
             );
         })
         .then((thought) => res.json(thought))
