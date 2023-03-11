@@ -3,7 +3,7 @@ const { User, Thought } = require('../models');
 module.exports = {
     //get all thoughts
     getThoughts(req, res) {
-        Thought.find({})
+        Thought.find()
         // .populate({path: 'reactions', select: '-__v'})
         // .select('-__v')
         .then((thoughts) => res.json(thoughts))
