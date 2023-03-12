@@ -44,7 +44,7 @@ module.exports = {
                 ? res.status(404).json({message: 'No thought found with that id!'})
                 : res.json(thought)
         )
-        .catch((err) => res.json(err))
+        .catch((err) => res.status(500).json(err))
     },
     //delete thought
     deleteThought(req, res) {
@@ -52,8 +52,8 @@ module.exports = {
         .then((thought) => 
             !thought
                 ? res.status(404).json({message: 'No thought found with that id!'})
-                : res.json(thought)
+                : res.json({message: 'Thought successfully deleted!'})
         )
-        .then(() => res.json({message: 'Thought successfully deleted!'}))
+        .catch((err) => res.status(500).json(err))
     }
 };

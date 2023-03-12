@@ -48,5 +48,37 @@ module.exports = {
             )
         .then(() => res.json({message: 'User and associated thoughts deleted!'}))
         .catch((err) => res.json(err));
+    },
+
+    // FRIEND ROUTES -------->
+    addFriend(req, res) {
+        User.findOneAndUpdate(
+            { _id: req.params.id },
+            { $addToSet: {friends: req.params.friendId} },
+            { new: true }
+            )
+        .populate({path: 'friends', select: '-__v'})
+        .select('-__v')
+        .then((user) =>
+            !user
+                ? res.status(404).json({message: 'No user found with that id!'})
+                : res.json(user)
+            )
+        .catch((err) => res.status(500).json(err));
+    },
+    //delete friend
+    deleteFriend(req, res) {
+        User.findOneAndUpdate(
+            {_id: req.params.id},
+            { $pull: {friends: req.params.friendId} },
+            {new: true}
+            )
+        .then((user) => 
+            !user
+                ? res.status(404).json({message: 'No user found with that id!'})
+                : res.json({message: 'User successfully removed from friends list!'})
+        )
+        .catch((err) => res.status(500).json(err));
     }
+
 };
