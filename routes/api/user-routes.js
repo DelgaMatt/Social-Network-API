@@ -16,6 +16,6 @@ router.route('/').get(getAllUsers).post(createUser);
 router.route('/:id').get(getSingleUser).put(updateUser).delete(deleteUser);
 
 //3001/api/users/:id/friends/:friendId
-router.route('/:id/friends/:friendId').put(addFriend).delete(deleteFriend);
+router.route('/:id/friends/:friendId').post(addFriend).delete(deleteFriend);
 
 module.exports = router;

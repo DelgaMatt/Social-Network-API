@@ -7,7 +7,7 @@ module.exports = {
         .populate({path: 'friends', select: '-__v'})
         .select('-__v')
         .then((users) => res.json(users))
-        .catch((err) => res.status(500).json(err))
+        .catch((err) => res.status(500).json(err));
     },
 
     getSingleUser(req, res) {
@@ -26,9 +26,9 @@ module.exports = {
     createUser(req, res) {
         User.create(req.body)
         .then((user) => res.json(user))
-        .catch((err) => res.status(500).json(err))
+        .catch((err) => res.status(500).json(err));
     },
-    //update user
+  
     updateUser(req, res) {
         User.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
         .then((user) =>
@@ -38,19 +38,18 @@ module.exports = {
             )
         .catch((err) => res.status(500).json(err));
     },
-    //delete user
+    
     deleteUser(req, res) {
         User.findOneAndDelete({_id: req.params.id})
         .then((user) => 
             !user
                 ? res.status(404).json({message: 'No user found with that id!'})
-                : Thought.deleteMany({_id: { $in: user.thoughts} })
+                : Thought.deleteMany({_id: { $in: user.thoughts}})
             )
         .then(() => res.json({message: 'User and associated thoughts deleted!'}))
         .catch((err) => res.json(err));
     },
-
-    // FRIEND ROUTES -------->
+    // <-------- FRIEND CONTROLLERS -------->
     addFriend(req, res) {
         User.findOneAndUpdate(
             { _id: req.params.id },
@@ -66,12 +65,12 @@ module.exports = {
             )
         .catch((err) => res.status(500).json(err));
     },
-    //delete friend
+    
     deleteFriend(req, res) {
         User.findOneAndUpdate(
-            {_id: req.params.id},
+            { _id: req.params.id },
             { $pull: {friends: req.params.friendId} },
-            {new: true}
+            { new: true }
             )
         .then((user) => 
             !user
