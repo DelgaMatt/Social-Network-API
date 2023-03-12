@@ -13,7 +13,9 @@
   ## Installation
   To install this application, clone this project repository onto your local system,
   ## Usage
-  To use this application after installation, open the integrated terminal on the 'server.js' file and run the command 'node server.js' to start the server. Since this project is a RestfulAPI, you'll need an API development platform like Insomia in order to interact with data.
+  To use this application after installation, open the integrated terminal on the 'server.js' file and run the command 'node server.js' to start the server. Since this project is a RestfulAPI, you'll need an API development platform like Insomia in order to interact with data. See a walkthrough demonstration below
+
+  https://user-images.githubusercontent.com/115049801/224573886-dcc59fcf-9768-4f55-94be-24cd6ed5343f.mp4
   ## License
   This app is covered under the [MIT License](https://opensource.org/licenses/MIT)<br>
   Copyright (C) Matthew Delgado 2023
