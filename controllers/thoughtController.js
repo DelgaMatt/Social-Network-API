@@ -55,5 +55,36 @@ module.exports = {
                 : res.json({message: 'Thought successfully deleted!'})
         )
         .catch((err) => res.status(500).json(err))
+    },
+
+    //REACTION routes ---------->
+    addReaction(req, res) {
+        Thought.findByIdAndUpdate(
+            { _id: req.params.id },
+            { $addToSet: {reactions: req.body} },
+            { new: true }
+            )
+        .populate({path: 'reactions', select: '-__v'})
+        .select('-__v')
+        .then((thought) =>
+            !thought   
+                ? res.status(404).json({message: 'No thought found with that id!'})
+                : res.json(thought)
+        )
+        .catch((err) => res.status(500).json(err));
+    },
+    //delete reaction
+    deleteReaction(req, res) {
+        Thought.findOneAndUpdate(
+            {_id: req.params.thoughtId},
+            { $pull: {reactions: {reactionId: req.params.reactionId} }},
+            { new: true}
+        )
+        .then((thought) => 
+            !thought    
+                ? res.status(404).json({message: 'No thought found with that id!'})
+                : res.json({message: 'Reaction successfully removed!'})
+        )
+        .catch((err) => res.status(500).json(err));
     }
 };
